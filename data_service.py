@@ -22,8 +22,14 @@ def get_clients():
         enterprises_list.append(enterprise.split(";"))
 
     print(enterprises_list)
-    pass
  
 
 
-# get_clients()
+get_clients()
+
+
+# [
+#     ['1010', ' Універмаг', '  1704'],
+#     ['1020', ' Дружба ЛТД', ' 972'], 
+#     ['1030', ' Радунь', '     500']
+# ]
