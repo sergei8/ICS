@@ -25,4 +25,3 @@ def get_clients():
 
 clients = get_clients()
 print(clients)   
-
