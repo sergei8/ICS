@@ -1,8 +1,8 @@
 """модуль зчитує первинні файли для обробки
 """
 
-def get_clients():
-    """повертає список клієнтів
+def get_cliets():
+    """повернає список клієнтів
 
     Returns:
         [list]: список клієнтів
@@ -23,5 +23,6 @@ def get_clients():
     return from_file
 
 
-clients = get_clients()
+clients = get_cliets()
 print(clients)   
+
