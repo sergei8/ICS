@@ -12,17 +12,6 @@ def get_clients():
         clients_list: список клієнтів
     """
 
-    # from_file = [
-    #     "35;ЕЛЕКС МАРКЕТИНГ;пр.Перемоги 11",
-    #     "39;ПРАГМА;вул.Кіото 19",
-    #     "44;ЕКСИМЕР;пр.Бандери 42",
-    #     "45;ТЕМП;вул.Глибочицька 3",
-    #     "47;КАМІ;вул.В.Вал 18",
-    #     "50;ЛАНИТ;вул.Хрещатик 13",
-    #     "54;ХІТОН;пр.ак.Глушкова 16",
-    #     "67;ЕЛЬДОРАДО;вул.Васильківська 5"
-    #     ]
-
     with open("./data/clients.txt") as clients_file:
         from_file = clients_file.readlines()
 
@@ -40,22 +29,16 @@ def get_orders():
     Returns:
         from_file: список накладних
     """
-
-
-    from_file = [
-        "35;202;ARTLINE Gaming X51 ;2;5200",
-        "39;203;Everest Home 4070 ;1;12000",
-        "44;205;Asus ROG Strix;2;17000",
-        "45;207;MacBook Pro 15”;2;30000",
-        "47;211;Everest Home 4070 ;1;12000",
-        "50;204;MacBook Pro 15”;1;30000",
-        "54;206;Asus ROG Strix;2;17000",
-        "67;212;MacBook Pro 13”;2;26000"
-    ]
+    
+    with open('./data/orders.txt') as orders_file:
+        from_file = orders_file.readlines()
 
     
     # розбити строку на реквізити та перетворити формати (при потребі)
-    orders_list = []    # список-накопичувач
+    
+    # список-накопичувач
+    orders_list = []    
+    
     for line in from_file:
         line_list = line.split(';')
         line_list[3] = int(line_list[3])
@@ -72,6 +55,7 @@ def show_clients(clients):
         clients (list): список клієнтів
     """
 
+    # задати інтервал виводу
     client_code_from = input("З якого кода клієнта? ")
     client_code_to   = input("По який кода клієнта? ")
 
@@ -80,12 +64,21 @@ def show_clients(clients):
             print ("код: {:5} назва: {:15} адреса: {:25}".format(*client)) 
 
 
-clients = get_clients()
-show_clients(cli0ents)
+def show_orders(orders):
+    """виводить список накладних на екран
 
-# print("---------------------")
+    Args:
+        orders (list): список накладних
+    """
 
-# orders = get_orders()
-# for order in orders:
-#     print(order)
+    for order in orders:
+        print("код клієнта: {:3} накладна № {:4} товар: {:20} кількість: {:3} ціна: {:7}"
+            .format(order[0], order[1], order[2], order[3], order[4]))
+
+# clients = get_clients()
+# show_clients(clients)
+
+# orders= get_orders()
+# show_orders(orders)
+
 
