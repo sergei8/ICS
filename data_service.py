@@ -2,33 +2,47 @@
 """
 
 def get_clients():
-    """повертає список клієнтів та фороматує значення
+    """повертає список клієнтів з файла 'clients.txt` та фороматує значення
 
     Returns:
         clients_list: список клієнтів
     """
 
-    from_file = [
-        "35;ЕЛЕКС МАРКЕТИНГ;пр.Перемоги 11",
-        "39;ПРАГМА;вул.Кіото 19",
-        "44;ЕКСИМЕР;пр.Бандери 42",
-        "45;ТЕМП;вул.Глибочицька 3",
-        "47;КАМІ;вул.В.Вал 18",
-        "50;ЛАНИТ;вул.Хрещатик 13",
-        "54;ХІТОН;пр.ак.Глушкова 16",
-        "67;ЕЛЬДОРАДО;вул.Васильківська 5"
-        ]
+    with open("./data/clients.txt") as clients_file:
+        from_file = clients_file.readlines() 
 
     # накопичувач клієнтів
     clients_list = []
 
     # блок виділяє окремі реквізити з кожного рядка
     for line in from_file:
+        line = line[:-2]
         line_list = line.split(';')
         clients_list.append(line_list)
 
     return clients_list
 
+def get_orders():
+    """повертає список накладних з файла 'orders.txt`
+
+    Returns:
+        from_file: список накладних
+    """
+
+    with open("./data/orders.txt") as orders_file:
+        from_file = orders_file.readlines() 
+
+    # список-накопичувач
+    orders_list = []    
+    
+    # розбити строку на реквізити та перетворити формати (при потребі)
+    for line in from_file:
+        line_list = line.split(';')
+        line_list[3] = int(line_list[3])
+        line_list[4] = int(line_list[4])
+        orders_list.append(line_list)
+
+    return orders_list
 
 def show_clients(clients):
     """ виводить список клітєнтів за деякою умовою
@@ -51,7 +65,11 @@ def show_clients(clients):
         print("Записів з кодом {} не знайдено".format(client_code_from))
 
 
+
 clients = get_clients()
 show_clients(clients)
+
+# orders = get_orders()
+# print(orders)
 
 
