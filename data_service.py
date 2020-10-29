@@ -40,11 +40,15 @@ def show_clients(clients):
     client_code_from = input("З якого кода? ")
     client_code_to   = input("По який код? ") 
 
+    kol_lines = 0
+
     for client in clients:
         if  client_code_from <= client[0] <= client_code_to: 
             print("код: {:4} назва: {:17} адреса: {:20}".format(client[0], client[1], client[2]))
+            kol_lines += 1
 
-
+    if kol_lines == 0:
+        print("Код не знайден")
 
 clients = get_clients()
 show_clients(clients)
