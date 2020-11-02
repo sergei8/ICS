@@ -64,12 +64,22 @@ def show_clients(clients):
     if kol_lines == 0:
         print("Записів з кодом {} не знайдено".format(client_code_from))
 
+def show_orders(orders):
+    """ виводить список накладних за деякою умовою
+
+    Args:
+        orders ([list]): список накладних
+    """
+    
+    for order in orders:
+        print("код: {:4} номер: {:4} товар: {:20} кільк: {:2} ціна: {:6}"
+          .format(order[0], order[1], order[2], order[3], order[4]))
 
 
-clients = get_clients()
-show_clients(clients)
+# clients = get_clients()
+# show_clients(clients)
 
-# orders = get_orders()
-# print(orders)
+orders = get_orders()
+show_orders(orders)
 
 
