@@ -72,4 +72,4 @@ if __name__ == "__main__":
     import os
     os.system('clear')
     for r in requests:
-        print(r)
+        print("{} {} {} {} \n".format(**r))
