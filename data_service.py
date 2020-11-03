@@ -9,22 +9,15 @@ def get_clients():
         'from_file' - список рядків файла
     """
 
-    from_file = [
-        "35;ЕЛЕКС МАРКЕТИНГ;пр.Перемоги 11",    
-        "39;ПРАГМА;вул.Кіото 19",
-        "44;ЕКСИМЕР;пр.Бандери 42",
-        "45;ТЕМП;вул.Глибочицька 3",
-        "47;КАМІ;вул.В.Вал 18",
-        "50;ЛАНИТ;вул.Хрещатик 13",
-        "54;ХІТОН;пр.ак.Глушкова 16",
-        "67;ЕЛЬДОРАДО;вул.Васильківська 5"
-    ]
+    with open('./data/clients.txt') as clients_file:
+        from_file = clients_file.readlines()
 
     # накопичувач клієнтів
     clients_list = []
 
     for line in from_file:
         line_list = line.split(';')
+        line_list[2] = line_list[2][:-1]  # вилучити `\n` в кінці
         clients_list.append((line_list))
 
     return clients_list
