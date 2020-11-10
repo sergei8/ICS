@@ -1,41 +1,44 @@
+"""модуль для роботи з файлами первинних даних
+- зчитування та вивід на екран
+"""
+
 """модуль зчитує первинні файли для обробки
 """
 
 def get_clients():
-    """повертає список клієнтів з файла 'clients.txt` та фороматує значення
+    """повертає список клієнтів b з файла `clients.txt`
 
     Returns:
         clients_list: список клієнтів
     """
 
     with open("./data/clients.txt") as clients_file:
-        from_file = clients_file.readlines() 
+        from_file = clients_file.readlines()
 
-    # накопичувач клієнтів
     clients_list = []
-
-    # блок виділяє окремі реквізити з кожного рядка
     for line in from_file:
-        line = line[:-2]
         line_list = line.split(';')
         clients_list.append(line_list)
 
     return clients_list
 
+
 def get_orders():
-    """повертає список накладних з файла 'orders.txt`
+    """повертає список накладних
 
     Returns:
         from_file: список накладних
     """
+    
+    with open('./data/orders.txt') as orders_file:
+        from_file = orders_file.readlines()
 
-    with open("./data/orders.txt") as orders_file:
-        from_file = orders_file.readlines() 
-
+    
+    # розбити строку на реквізити та перетворити формати (при потребі)
+    
     # список-накопичувач
     orders_list = []    
     
-    # розбити строку на реквізити та перетворити формати (при потребі)
     for line in from_file:
         line_list = line.split(';')
         line_list[3] = int(line_list[3])
@@ -44,42 +47,44 @@ def get_orders():
 
     return orders_list
 
+
 def show_clients(clients):
-    """ виводить список клітєнтів за деякою умовою
+    """виводить список клієнтів по заданому інтервалу кодів
 
     Args:
-        clients ([list]): список клітєнтів
+        clients (list): список клієнтів
     """
 
-    client_code_from = input("З якого коду клієнта? ")
-    client_code_to   = input("По який код клієнта? ")
-    
-    kol_lines = 0
+    # задати інтервал виводу
+    client_code_from = input("З якого кода клієнта? ")
+    client_code_to   = input("По який кода клієнта? ")
+
+    lines_found = 0
 
     for client in clients:
-        if  client_code_from  <= client[0] <= client_code_to:
-            print("код: {:4} назва: {:16} адреса: {:20}".format(client[0], client[1], client[2]))
-            kol_lines = kol_lines + 1
+        if client_code_from <= client[0] <= client_code_to:
+            print ("код: {:5} назва: {:15} адреса: {:25}".format(*client))
+            lines_found += 1
 
-    if kol_lines == 0:
-        print("Записів з кодом {} не знайдено".format(client_code_from))
+    if lines_found == 0:
+        print("Клієнтів по Вашому запиту не знайдено") 
+
 
 def show_orders(orders):
-    """ виводить список накладних за деякою умовою
+    """виводить список накладних на екран
 
     Args:
-        orders ([list]): список накладних
+        orders (list): список накладних
     """
-    
-    for order in orders:
-        print("код: {:4} номер: {:4} товар: {:20} кільк: {:2} ціна: {:6}"
-          .format(order[0], order[1], order[2], order[3], order[4]))
 
+    for order in orders:
+        print("код клієнта: {:3} накладна № {:4} товар: {:20} кількість: {:3} ціна: {:7}"
+            .format(order[0], order[1], order[2], order[3], order[4]))
 
 # clients = get_clients()
 # show_clients(clients)
 
-orders = get_orders()
-show_orders(orders)
+# orders= get_orders()
+# show_orders(orders)
 
 
