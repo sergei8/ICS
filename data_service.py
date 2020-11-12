@@ -1,42 +1,55 @@
-""" модуль для отримання даних про постачання та вивід їх на екран
+"""модуль для роботи з файлами первинних даних
+- зчитування та вивід на екран
 """
 
+"""модуль зчитує первинні файли для обробки
+"""
 
 def get_clients():
-    """ повертає вміст файла 'clients.txt` у вигляді списка
+    """повертає список клієнтів b з файла `clients.txt`
 
     Returns:
-        'from_file' - список рядків файла
+        clients_list: список клієнтів
     """
 
-    with open('./data/clients.txt') as clients_file:
+    with open("./data/clients.txt") as clients_file:
         from_file = clients_file.readlines()
 
-    # накопичувач клієнтів
     clients_list = []
-
     for line in from_file:
         line_list = line.split(';')
-        line_list[2] = line_list[2][:-1]  # вилучити `\n` в кінці
-        clients_list.append((line_list))
+        clients_list.append(line_list)
 
     return clients_list
 
-def get_orders():
 
-        from_file = [
-        "35;202;ARTLINE Gaming X51 ;2;5200",
-        "39;203;Everest Home 4070 ;1;12000",
-        "44;205;Asus ROG Strix;2;17000",
-        "45;207;MacBook Pro 15”;2;30000",
-        "47;211;Everest Home 4070 ;1;12000",
-        "50;204;MacBook Pro 15”;1;30000",
-        "54;206;Asus ROG Strix;2;17000",
-        "67;212;MacBook Pro 13”;2;26000"
-    ]
+def get_orders():
+    """повертає список накладних
+
+    Returns:
+        from_file: список накладних
+    """
+    
+    with open('./data/orders.txt') as orders_file:
+        from_file = orders_file.readlines()
+
+    
+    # розбити строку на реквізити та перетворити формати (при потребі)
+    
+    # список-накопичувач
+    orders_list = []    
+    
+    for line in from_file:
+        line_list = line.split(';')
+        line_list[3] = int(line_list[3])
+        line_list[4] = int(line_list[4])
+        orders_list.append(line_list)
+
+    return orders_list
+
 
 def show_clients(clients):
-    """виводить список клієнтів
+    """виводить список клієнтів по заданому інтервалу кодів
 
     Args:
         clients (list): список клієнтів
@@ -44,20 +57,34 @@ def show_clients(clients):
 
     # задати інтервал виводу
     client_code_from = input("З якого кода клієнта? ")
-    client_code_to   = input("По який код клієнта? ")
-    
-    # накопичує кількість виведених рядків
-    kol_lines = 0
+    client_code_to   = input("По який кода клієнта? ")
+
+    lines_found = 0
 
     for client in clients:
-        if  client_code_from  <= client[0] <= client_code_to:
-            print("код: {:3} назва: {:16} адреса: {:20}".format(client[0], client[1], client[2]))
-            kol_lines += 1
+        if client_code_from <= client[0] <= client_code_to:
+            print ("код: {:5} назва: {:15} адреса: {:25}".format(*client))
+            lines_found += 1
 
-    # перевірити чи був вивід хоча б одного рядка
-    if kol_lines == 0:
-        print("По вашому запиту клієнтів не знайдено!")
-    
+    if lines_found == 0:
+        print("Клієнтів по Вашому запиту не знайдено") 
 
-clients = get_clients()
-show_clients(clients)
+
+def show_orders(orders):
+    """виводить список накладних на екран
+
+    Args:
+        orders (list): список накладних
+    """
+
+    for order in orders:
+        print("код клієнта: {:3} накладна № {:4} товар: {:20} кількість: {:3} ціна: {:7}"
+            .format(order[0], order[1], order[2], order[3], order[4]))
+
+# clients = get_clients()
+# show_clients(clients)
+
+# orders= get_orders()
+# show_orders(orders)
+
+
