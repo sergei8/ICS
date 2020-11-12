@@ -10,7 +10,7 @@ def get_clients():
         client_list: список клієнтів 
     """    
 
-    with open(".\data\clients.txt") as clients_file:
+    with open("./data/clients.txt") as clients_file:
         from_file = clients_file.readlines()
 
     # накопічувач клієнтів
