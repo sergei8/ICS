@@ -57,7 +57,7 @@ def create_zajavka():
     return zajavka_list
 
 
-result = create_zajavka()
+# result = create_zajavka()
 
-for line in  result:
-    print(line)
+# for line in  result:
+#     print(line)
