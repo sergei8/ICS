@@ -1,9 +1,10 @@
 """головний модуль додатку
-виводить розрахункову таблицю
+виводить розрахункову таблицю, зберігає розрахунок у файл
+показує на екрані первинні дані
 """
 
 from process_data import create_zajavka
-from data_service import show_clients, show_orders
+from data_service import show_clients, show_orders, get_orders, get_clients
 import os
 
 MAIN_MENU = \
@@ -21,13 +22,13 @@ MAIN_MENU = \
 TITLE = "ЗАЯВКИ НА ПРОДАЖ УСТАТКУВАННЯ ПО МАГАЗИНУ"
 HEADER = \
 '''
-==========================================================================================
-| Устаткування      |   Клієнт           |  Номер заказа  | Кількість |   Ціна   |  Сума |
-==========================================================================================
+===========================================================================================
+| Устаткування      |   Клієнт           |  Номер заказа  | Кількість |   Ціна   |  Сума  |
+===========================================================================================
 '''
 FOOTER = \
 '''
-==========================================================================================
+===========================================================================================
 '''
 
 STOP_MESSAGE = "Нажміть будь-яку клавішу для продовження"
@@ -61,30 +62,56 @@ def write_zajavka(zajavka_list):
         zajavka_list ([type]): список заявок
     """
     
-    with open('.\data\zajavki.txt', "w") as zajavka_file:
+    with open('./data/zajavki.txt', "w") as zajavka_file:
         for zajavka in zajavka_list:
-            line = ','.join(list(zajavka.values()))
+            line = \
+                zajavka['oborud'] + ';' +      \
+                zajavka['client'] + ';' +      \
+                zajavka['zakaz']  + ';' +      \
+                str(zajavka['kol'])  + ';' +   \
+                str(zajavka['price'])  + ';' + \
+                str(zajavka['total']) + '\n' 
+                
             zajavka_file.write(line)
+        
+        print("Файл заявок сформовано ...")
     
-    
-
 
 while True:
+    
+    # вивід головного меню
     os.system('clear')
     print (MAIN_MENU)
-    func_nomer = input('Введіть номер функції: ')
+    command_number = input('Введіть номер команди: ')
 
-    if func_nomer == '0':
+    # обробка команд користувача
+    if command_number == '0':
         print("\nПрограма завершила роботу")
         exit(0)
-    elif func_nomer == '1':
+    
+    elif command_number == '1':
         zajavka_list = create_zajavka()
-        show_zajavka(zajavka_list)
+        # show_zajavka(zajavka_list)
+        show_zajavka(create_zajavka())
         input(STOP_MESSAGE)
-    elif func_nomer == '2':
+    
+    elif command_number == '2':
         zajavka_list = create_zajavka()
         write_zajavka(zajavka_list)
         input(STOP_MESSAGE)
+    
+    elif command_number == '3':
+        show_orders(get_orders())
+        input(STOP_MESSAGE)
+    
+    elif command_number == '4':
+        show_clients(get_clients())
+        input(STOP_MESSAGE)
+        
+    else:
+        print("невірний номер команди...")
+        input(STOP_MESSAGE)
+
 
     
     

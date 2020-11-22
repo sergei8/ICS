@@ -42,7 +42,7 @@ def get_orders():
     for line in from_file:
         line_list = line.split(';')
         line_list[3] = int(line_list[3])
-        line_list[4] = int(line_list[4])
+        line_list[4] = float(line_list[4])
         orders_list.append(line_list)
 
     return orders_list
