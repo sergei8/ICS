@@ -58,7 +58,7 @@ def create_zajavka():
 
 
 
-# zajavkas = create_zajavka()
+zajavkas = create_zajavka()
 
-# for item in zajavkas:
-#     print(item)   
+for item in zajavkas:
+    print(item)   
