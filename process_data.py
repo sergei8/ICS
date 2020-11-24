@@ -1,63 +1,59 @@
-""" розрахунок заявок на товари по магазину
+""" формування заявок на устаткування по магазину
 """
 
-from data_service import get_orders, get_clients
+from data_service import get_clients, get_orders
 
-# словник в якому будуть накопичуватись результати розрахунків
+
+# структура рядка вихідних даних
 zajavka = {
-    'oborud' : "",     # назва устаткування
-    'client' : "",     # назва клієнта
-    'zakaz'  : "",     # номер заказа
-    'kol'    : 0,      # кількість товару
-    'price'  : 0.0,    # ціна
-    'total'  : 0.0     # сума
+    
+    'oborud_name'  : '',     # назва устаткування
+    'client_name'  : '',     # назва клієнта
+    'order_number' : '',     # номер заказа
+    'kol'          : 0,      # кількість
+    'price'        : 0.0,    # ціна
+    'total'        : 0.0     # сума
 }
 
-def create_zajavka():
-    """формування списку заявок по магазину на основі вхідних файлів
-    """
-    orders = get_orders()
-    clients = get_clients()
+clients = get_clients()
+orders = get_orders()
 
+
+def create_zajavka_list():  
+    """ накопичує та повертає список заявок
+    """
+    
     def get_client_name(client_code):
         """повертає назву клієнта по його коду
 
         Args:
-            client_code : код клієнта 
+            client_code ([type]): код клієнта
 
         Returns:
-            client_name: назив клієнта
+            [type]: назва клієнта
         """
-
         for client in clients:
-            if client[0] == client_code:
+            if client_code == client[0]:
                 return client[1]
-
-        return "*** назва не знайдена"           
-
-    # список заявк по магаину, що формується
+            
+        return "*** назва не знайдена"
+     
+    # накопичувач заявок
     zajavka_list = []
 
-    # обробляємо послідовно кожний рядок 'orders`
     for order in orders:
         
-        # підготувати робочий словник для рядка `order`
-        zajavka_copy = zajavka.copy()
-
-        # заповнити робочий словник значеннями з `order`
-        zajavka_copy['oborud'] = order[2]
-        zajavka_copy['zakaz']  = order[1]
-        zajavka_copy['kol']    = order[3]
-        zajavka_copy['price']  = order[4]
-        zajavka_copy['total']  = zajavka_copy['kol'] * zajavka_copy['price']
-        zajavka_copy['client'] = get_client_name(order[0])
-
-        zajavka_list.append(zajavka_copy)
-
+        # створити робочу копію
+        zajavka_work = zajavka.copy()
+        
+        zajavka_work['oborud_name']     = order[2]
+        zajavka_work['order_number']    = order[1]
+        zajavka_work['kol']             = order[3]
+        zajavka_work['price']           = order[4]
+        zajavka_work['total']           = zajavka_work['kol'] * zajavka_work['price']
+        zajavka_work['client_name']     = get_client_name(order[0])
+        
+        zajavka_list.append(zajavka_work)
+        
     return zajavka_list
-
-
-result = create_zajavka()
-
-for line in  result:
-    print(line)
+    
