@@ -57,5 +57,3 @@ def create_zajavka():
 
     return zajavka_list
 
-result = create_zajavka()
-
