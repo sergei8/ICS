@@ -37,9 +37,7 @@ def create_zajavka():
                 return client[1]
 
         return "*** код клієнта не знайдений"
-    
-    
-    
+        
     # накопичувач заявок 
     zajavka_list = []
 
@@ -53,14 +51,11 @@ def create_zajavka():
         zajavka_tmp['kol']            = order[3]
         zajavka_tmp['price']          = order[4]
         zajavka_tmp['total']          = zajavka_tmp['kol'] * zajavka_tmp['price']
-        zajavka_tmp['client_name'] = get_client_name(order[0])
+        zajavka_tmp['client_name']    = get_client_name(order[0])
 
         zajavka_list.append(zajavka_tmp)
 
     return zajavka_list
 
 result = create_zajavka()
-
-for r in result:
-    print(r)
 
