@@ -4,6 +4,7 @@
 """
 import os
 from process_data import create_zajavka_list
+from data_service import show_clients, show_orders, get_orders, get_clients
 
 MAIN_MENU = \
 """
@@ -92,6 +93,17 @@ while True:
         zajavka_list = create_zajavka_list()
         write_file(zajavka_list)
         input(STOP_MESSAGE)
+        
+    elif command_number == '3':
+        orders = get_orders()
+        show_orders(orders)
+        input(STOP_MESSAGE)
+        
+    elif command_number == '4':
+        clients = get_clients()
+        show_clients(clients)
+        input(STOP_MESSAGE)
+        
 
         
     
